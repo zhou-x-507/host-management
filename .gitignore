@@ -1,0 +1,13 @@
+host/__pycache__/
+host/app/__pycache__/
+host/host/__pycache__/
+*.ipynb
+.vscode
+.venv
+*.pyc
+*.log
+__pycache__
+/.idea/
+.DS_Store
+.idea
+
