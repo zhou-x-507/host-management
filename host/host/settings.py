@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'host.middleware.RequestTimingMiddleware',
 ]
 
 ROOT_URLCONF = 'host.urls'
@@ -126,3 +127,30 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = { 
+    'version': 1, 
+    'disable_existing_loggers': False, 
+    'handlers': { 
+        'console': { 
+            'class': 'logging.StreamHandler', 
+        }, 
+    }, 
+    'root': { 
+        'handlers': ['console'], 
+        'level': 'DEBUG', 
+    }, 
+}
+
+# Celery配置
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    'collect_host_stats_daily': {
+        'task': 'app.tasks.collect_host_stats',
+        'schedule': crontab(minute=0, hour=0),
+    },
+}
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'

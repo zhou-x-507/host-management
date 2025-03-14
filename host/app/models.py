@@ -37,3 +37,17 @@ class Host(models.Model):
         db_table = "app_host"
         verbose_name = "Host"
         verbose_name_plural = verbose_name
+
+
+class HostCount(models.Model):
+    id = models.BigAutoField(primary_key=True, db_comment="id", verbose_name="id")
+    city = models.ForeignKey(City, null=True, blank=True, on_delete=models.DO_NOTHING, db_comment="关联城市", db_constraint=False)
+    datacenter = models.ForeignKey(Datacenter, null=True, blank=True, on_delete=models.DO_NOTHING, db_comment="关联机房", db_constraint=False)
+    count = models.IntegerField(null=True, blank=True, db_comment="主机数量", verbose_name="主机数量")
+    create_datetime = models.DateTimeField(null=True, blank=True, verbose_name="创建时间", db_comment="创建时间")
+
+    class Meta:
+        db_table_comment = "主机数量表"
+        db_table = "app_host_count"
+        verbose_name = "Host Count"
+        verbose_name_plural = verbose_name
