@@ -64,3 +64,6 @@ class HostViewSet(GenericViewSet):
         except Exception as e:
             logger.error(f"ping_host, failed error:{e}")
             return DeatilResponse(msg=f"error:{e}")
+
+
+# 新电脑测试
